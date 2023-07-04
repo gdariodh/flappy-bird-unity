@@ -2,11 +2,27 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private SpriteRenderer spriteRenderer;
+
     private Vector3 direction;
+
+    private int spriteIndex;
+
+    public Sprite[] sprites;
 
     public float gravity = -9.8f;
 
     public float strength = 5f;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        InvokeRepeating(nameof(AnimateSprite), 0.15f, 0.15f);
+    }
  
     private void Update()
     {
@@ -27,5 +43,17 @@ public class Player : MonoBehaviour
 
         direction.y += gravity * Time.deltaTime;
         transform.position += direction * Time.deltaTime;
+    }
+
+    private void AnimateSprite()
+    {
+        spriteIndex++;
+
+        if(spriteIndex >= sprites.Length)
+        {
+            spriteIndex = 0;
+        }
+
+        spriteRenderer.sprite = sprites[spriteIndex];
     }
 }
