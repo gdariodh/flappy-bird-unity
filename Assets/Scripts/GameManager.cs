@@ -1,63 +1,62 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-   public Player player;
-   public Text scoreText;
-   public GameObject playButton;
-   public GameObject gameOver;
+    private Player player;
+    private Spawner spawner;
 
-   private int score;
+    public Text scoreText;
+    public GameObject playButton;
+    public GameObject gameOver;
+    public int score { get; private set; }
 
-   private void Awake()
-   {
-
-     Application.targetFrameRate = 60;
-
-     Pause();
-   }
-
-   public void Play()
-   {
-    score = 0;
-    scoreText.text = $"Score: {score.ToString()}";
-
-    playButton.setActive(false);
-    gameOver.SetActive(false);
-    
-    Time.timeScale = 1f;
-    player.enabled = true;
-
-    Pipes[] pipes = FindObjectsOfType<Pipes>();
-
-    for (int i = 0; i < pipes.Length; i++)
+    private void Awake()
     {
-       Destroy(pipes[i].gameObject);
+        Application.targetFrameRate = 60;
+
+        player = FindObjectOfType<Player>();
+        spawner = FindObjectOfType<Spawner>();
+
+        Pause();
     }
-   }
 
-   public void Pause()
-   {
-     Time.timeScale = 0f;
-     player.enabled = false;
-   }
+    public void Play()
+    {
+        score = 0;
+        scoreText.text = $"Score: {score.ToString()}";
 
-   public void GameOver()
-   {
-     Debug.Log("Game Over!");  
-     gameOver.SetActive(true);
-     playButton.SetActive(true);
+        playButton.SetActive(false);
+        gameOver.SetActive(false);
 
-     Pause(); 
-   }
+        Time.timeScale = 1f;
+        player.enabled = true;
 
-   public void IncreaseScore()
-   {    
-     score++;
-     scoreText.text = $"Score: {score.ToString()}";
-   }
+        Pipes[] pipes = FindObjectsOfType<Pipes>();
 
- 
+        for (int i = 0; i < pipes.Length; i++) {
+            Destroy(pipes[i].gameObject);
+        }
+    }
+
+    public void GameOver()
+    {
+        playButton.SetActive(true);
+        gameOver.SetActive(true);
+
+        Pause();
+    }
+
+    public void Pause()
+    {
+        Time.timeScale = 0f;
+        player.enabled = false;
+    }
+
+    public void IncreaseScore()
+    {
+        score++;
+        scoreText.text = $"Score: {score.ToString()}";
+    }
+
 }
