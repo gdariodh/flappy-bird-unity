@@ -1,6 +1,6 @@
 # Flappy Bird Juego - Unity C# - Gabriel Diaz - AIEP
 
-###--- Hola, bienvenido! ---
+### --- Hola, bienvenido! ---
 
 Este proyecto esta desarrollado usando unity y C#. 
 
